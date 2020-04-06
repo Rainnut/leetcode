@@ -9,17 +9,19 @@
  * @param {number} N
  * @return {number}
  */
-var fib = function(N) {
-    var cache = cache || {}
-    if (N <= 1) return N
-    if (cache[N]) return cache[N]
+var fib = function (N) {
+    var memory = [0,1]
 
-    if (N > 2 && cache[N-1] && cache[N-2]) {
-        cache[N] = cache[N-1] + cache[N-2]
-        return cache[N]
+    var fibonacci = function (num) {
+        var result = memory[num]
+        if (typeof result !== 'number') {
+            result = fibonacci(num-2) + fibonacci(num-1)
+            memory[num] = result
+        }
+        return result
     }
-    return fib(N-1) + fib(N-2)
-};
+    return fibonacci
+}
 // @lc code=end
 
 /*
@@ -52,6 +54,26 @@ var fib = function(N) {
     }
     return fib(N-1) + fib(N-2)
 };
+/*
+* 带记忆的fibonacci
+* 时间复杂度：O(n)，f(n) = f(n-1)+ f(n-2),后俩个值都在上一次递归中获得值
+* 空间复杂度：O(n)
+*/
+// 执行用时 :56 ms, 在所有 JavaScript 提交中击败了93.92%的用户
+// 内存消耗 :33.4 MB, 在所有 JavaScript 提交中击败了99.70%的用户
+var fib = function (N) {
+    var memory = [0,1]
+
+    var fibonacci = function (num) {
+        var result = memory[num]
+        if (typeof result !== 'number') {
+            result = fibonacci(num-2) + fibonacci(num-1)
+            memory[num] = result
+        }
+        return result
+    }
+    return fibonacci
+}()
 
 /*
 * 迭代

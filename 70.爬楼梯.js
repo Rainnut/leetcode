@@ -42,3 +42,22 @@ var climbStairs = function(n) {
     }
     return climbStairs(n-1) + climbStairs(n-2)
 };
+
+// 带记忆的递归，闭包
+// 45/45 cases passed (60 ms)
+// Your runtime beats 78.51 % of javascript submissions
+// Your memory usage beats 93.73 % of javascript submissions (33.6 MB)
+var climbStairs = function(n) {
+    var mome = {1:1,2:2,3:3}
+
+    function climb(n){
+        var result = mome[n]
+        if(typeof result != 'number'){
+            result = climb(n-1)+climb(n-2)
+            mome[n] = result
+        }
+        return result
+    }
+    return climb
+}();
+
