@@ -22,7 +22,7 @@ var reverseList = function(head) {
     let curr = head
     let prev = null
     while (curr) {
-        let currTemp = curr.next
+        let currTemp = curr.next  // 保存下一个结点指向避免后续操作丢失
         curr.next = prev
         prev = curr
         curr = currTemp
