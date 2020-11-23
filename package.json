@@ -1,0 +1,22 @@
+{
+  "name": "leetcode",
+  "version": "1.0.0",
+  "description": "记录个人刷leetcode的题解",
+  "main": "104.二叉树的最大深度.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rainnut/leetcode.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rainnut/leetcode/issues"
+  },
+  "homepage": "https://github.com/Rainnut/leetcode#readme",
+  "dependencies": {
+    "eslint": "^7.14.0"
+  }
+}

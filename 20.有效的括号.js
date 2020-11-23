@@ -10,19 +10,19 @@
  * @return {boolean}
  */
 var isValid = function(s) {
-    var stack = []
-    for(var ch of s){
-        if (ch == '(') {
+    const stack = []
+    for(let ch of s){
+        if(ch === '('){
             stack.push(')')
-        } else if (ch == '{') {
+        }else if(ch === '{'){
             stack.push('}')
-        } else if (ch == '[') {
+        }else if(ch === '['){
             stack.push(']')
-        } else if (stack.length == 0 || ch != stack.pop()) {
+        }else if(stack.length === 0 || ch !== stack.pop()){
             return false
-        }  
+        }
     }
-    return stack.length == 0
+    return stack.length === 0
 };
 // @lc code=end
 

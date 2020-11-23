@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "eslint:recommended"
+  ],
+  "rules": {
+    "linebreak-style": [0,"error", "windows"],
+    "semi": ["error", "never"]
+  },
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  }
+}
