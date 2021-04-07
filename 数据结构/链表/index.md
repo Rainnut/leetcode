@@ -6,6 +6,7 @@
 ## 解题技巧
 
 * 快慢指针
+  * 证明闭环形链表：按照相对论的观点，以慢指针pslow为参考系，或者说从慢指针pslow的视角来看，快指针pfast每次只是移动一步，当然也就不会产生跳过慢指针的情况。
 * 三个指针
   * 链表反转、寻找第k个元素
 * 构建一个虚拟的链表头
@@ -89,7 +90,7 @@ var reverseList = function(head) {
     let curr = head
     let prev = null
     while (curr) {
-        let currTemp = curr.next  // 保存下一个结点指向避免后续操作丢失
+        let currTemp = curr.next  // 保存下一个节点指向避免后续操作丢失
         curr.next = prev
         prev = curr
         curr = currTemp

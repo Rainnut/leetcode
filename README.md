@@ -47,7 +47,7 @@
 1、Binary search，二分查找。O(logn)
 > 在有序的数组中查找，一分为二，每次只查找一边。
 2、Binary tree traversal，二叉搜索树。O(n)
-> 二叉树的遍历 ，每个结点都会访问一遍且只会访问一遍，所以时间复杂度线性于结点数。同理深度优先（前中后序遍历）、广度优先搜索的时间复杂度也是O(n)
+> 二叉树的遍历 ，每个节点都会访问一遍且只会访问一遍，所以时间复杂度线性于节点数。同理深度优先（前中后序遍历）、广度优先搜索的时间复杂度也是O(n)
 3、Optimal sorted matrix search，最优排序矩阵搜索。O(n)
 > 在已排序的矩阵中进行二分查找
 4、Merge sort，归并排序。O(nlogn)
@@ -60,10 +60,10 @@
 比如左子树高度2，那右子树高度范围可以为 1 - 4
 下面的条件用于保证高度差小于俩倍
 
-* 每个结点是红色或黑色
-* 根结点和叶结点（NIL）是黑色（头跟尾都是黑色）
-* 不能有个相邻的红色结点
-* 任何结点到每个叶子的所有路径包含相同数目的黑色结点
+* 每个节点是红色或黑色
+* 根节点和叶节点（NIL）是黑色（头跟尾都是黑色）
+* 不能有个相邻的红色节点
+* 任何节点到每个叶子的所有路径包含相同数目的黑色节点
 
 ### 递归
 
@@ -164,23 +164,41 @@ lru算法；
 ### 中序遍历二叉树非递归
 
 ```javascript
+// 实现1
 var inorderTraversal = function (root) {
-    var [WHITE, GRAY] = [0, 1] // 1为访问过节点
-    var res = []
-    var stack = [[WHITE, root]]
-    var node,color = null
-    while(){
-        [color, node] = stack.pop()
-        if(!node) continue
-        if(color == WHITE){
-            stack.push([WHITE, node.right])
-            stack.push([GRAY, node])
-            stack.push([WHITE, node.left])
-        }else{
-            res.push(node.val)
-        }
+  var [WHITE, GRAY] = [0, 1] // 1为访问过节点
+  var res = []
+  var stack = [[WHITE, root]]
+  var node,color = null
+  while(stack.length>0){
+    [color, node] = stack.pop()
+    if(!node) continue
+    if(color == WHITE){
+      stack.push([WHITE, node.right])
+      stack.push([GRAY, node])
+      stack.push([WHITE, node.left])
+    }else{
+      res.push(node.val)
     }
-    return
+  }
+  return res
+}
+// 实现2
+var inorderTraversal = function (root) {
+  const stack = []
+  let init = true
+  const res = []
+  while(stack.length > 0 || init){
+    while(root){
+      stack.push(root)
+      root = root.left
+    }
+    init = false
+    root = stack.pop()
+    res.push(root.val)
+    root = root.right
+  }
+  return res
 }
 ```
 

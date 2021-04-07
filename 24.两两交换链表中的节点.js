@@ -22,7 +22,7 @@
 var swapPairs = function(head) {
     if (!head) return null
     let cur = head
-    // 创建一个空结点存放结果链表
+    // 创建一个空节点存放结果链表
     let result = new ListNode(0)
     // 指针指向结果链表的尾部
     let prev = result

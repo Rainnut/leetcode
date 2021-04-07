@@ -68,7 +68,7 @@ var inorderTraversal = function(root) {
 // Your runtime beats 94.45 % of javascript submissions
 // Your memory usage beats 88.99 % of javascript submissions (33.7 MB)
 var inorderTraversal = function(root) {
-    const [WHITE, GRAY] = [0, 1] // WHITE - 未访问的新结点； GRAY - 已访问的结点
+    const [WHITE, GRAY] = [0, 1] // WHITE - 未访问的新节点； GRAY - 已访问的节点
     const res = []
     const stack = [[WHITE, root]]
     let color, node
@@ -76,7 +76,7 @@ var inorderTraversal = function(root) {
         [color, node] = stack.pop() // 若栈中有元素，则按照左节点、根节点、右节点的顺序依次弹出元素
         if (!node) continue
         if (color === WHITE) {
-            // 当前指向的结点是未访问过的结点，将其右节点，根节点，左节点依次入栈
+            // 当前指向的节点是未访问过的节点，将其右节点，根节点，左节点依次入栈
             stack.push([WHITE, node.right])
             stack.push([GRAY, node])
             stack.push([WHITE, node.left])

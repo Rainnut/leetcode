@@ -11,31 +11,31 @@
  */
 var threeSum = function(nums) {
     let arr = []
-    // 直接sort()是根据字母、数字大小排序，导致-1排在-3左边
-    nums.sort((a,b) => a-b)
-    for (let i = 0; i < nums.length-2; i++) {
-        // 当遍历下一个target与前面的相同时，跳过
-        if (i > 0 && nums[i] == nums[i-1]) continue 
-        let target = nums[i], x = i + 1, y = nums.length - 1 
-        while (x < y) {
-            let sum = target + nums[x] + nums[y]
-            if (sum == 0) {
-                arr.push([target, nums[x], nums[y]])
-                // 准备夹逼前，将左右俩边移到相同数值最紧处
-                while (x < y && nums[x+1] == nums[x]) x++
-                while (x < y && nums[y-1] == nums[y]) y--
-                // 有了上述的准备过程，这里夹逼时，左右俩边数值与上次数值不同
-                x++
-                y--
-            } else if (sum > 0) {
-                y--
-            } else {
-                x++
-            }
+    nums.sort((a, b) => a - b) // 复杂度
+    for (let i = 0; i < nums.length - 1; i++) {
+      // 每次循环已经把target值相同的情况包含了，过滤相同target
+      if (i > 0 && nums[i] === nums[i - 1]) continue
+      let target = nums[i]
+      let left = i + 1
+      let right = nums.length - 1
+      while (left < right) {
+        let sum = target + nums[left] + nums[right]
+        if (sum === 0) {
+          arr.push([target, nums[left], nums[right]])
+          // 收缩区间到左右值相同的最紧处,排除重复值
+          while (nums[left + 1] === nums[left]) left++
+          while (nums[right - 1] === nums[right]) right--
+          left++
+          right--
+        } else if (sum > 0) {
+          right--
+        } else {
+          left++
         }
+      }
     }
     return arr
-};
+}
 // @lc code=end
 
 // 暴力法 a + b = -c
@@ -60,13 +60,13 @@ var threeSum = function(nums) {
     //     }
     // }
     return result
-};
+}
 // 哈希表
 // 时间复杂度
 // 空间复杂度
 var threeSum = function(nums) {
     let hashMap = {}
-};
+}
 
 // 双指针
 // 在排好序的数组里，取第一个元素为target，剩余的左(x)右(y)夹逼。target+x+y，>0时右边缩进，<0时左边缩进。当x==y相遇后，target+1
@@ -87,7 +87,7 @@ var threeSum = function(nums) {
             let sum = target + nums[x] + nums[y]
             if (sum == 0) {
                 arr.push([target, nums[x], nums[y]])
-                // 准备夹逼前，将左右俩边移到相同数值最紧处
+                // 准备夹逼前，将左右俩边移到【相同数值最紧处】
                 while (x < y && nums[x+1] == nums[x]) x++
                 while (x < y && nums[y-1] == nums[y]) y--
                 // 有了上述的准备过程，这里夹逼时，左右俩边数值与上次数值不同
@@ -101,4 +101,4 @@ var threeSum = function(nums) {
         }
     }
     return arr
-};
+}

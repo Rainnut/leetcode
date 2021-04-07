@@ -19,15 +19,15 @@
 // 时间复杂度O(n)
 // 空间复杂度O(1)
 var reverseList = function(head) {
-    let curr = head
+    let cur = head
     let prev = null
-    while (curr) {
-        let currTemp = curr.next  // 保存下一个结点指向避免后续操作丢失
-        curr.next = prev
-        prev = curr
-        curr = currTemp
+    while(cur){
+        let temp = cur.next
+        cur.next = prev
+        prev = cur
+        cur = temp
     }
     return prev
-};
+}
 // @lc code=end
 
