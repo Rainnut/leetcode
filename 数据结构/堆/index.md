@@ -364,3 +364,52 @@ function convertMax(maxHeap) {
 var maxHeap = [9,4,7,1,-2,6,5]
 console.log(convertMax(maxHeap))
 ```
+
+## 题解
+
+### 剑指Offer 40.最小的k个数
+<!-- https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof/ -->
+// 保持堆的大小为K，然后遍历数组中的数字，遍历的时候做如下判断：
+// 1. 若目前堆的大小小于K，将当前数字放入堆中。
+// 2. 否则判断当前数字与大根堆堆顶元素的大小关系，如果当前数字比大根堆堆顶还大，这个数就直接跳过；
+//    反之如果当前数字比大根堆堆顶小，先poll掉堆顶，再将该数字放入堆中。
+```javascript
+class MaxHeap {
+  constructor (initArr) {
+    this.heap = []
+    this.buildHeap(initArr)
+  }
+  
+  __heapify (index) {
+    let max = this.heap[index]
+    let left = this.heap[]
+  }
+  __buildHeap (arr) {
+    if(!arr) return
+
+    this.heap = arr
+    for (let i = Math.floor((this.getSize()-1-1)/2); i>=0; i--) {
+      this.__heapify()
+    }
+  }
+  __percolateUp (elm) {
+    this.heap
+  }
+  insertItem (elm) {
+
+  }
+  getMax () {
+    return this.heap.length === 0 ? null : this.heap[0]
+  }
+  getSize () {
+    return this.heap.length
+  }
+  push (elm) {
+    if(!elm) return
+
+  }
+}
+var getLeastNumbers = function(arr, k) {
+
+}
+```

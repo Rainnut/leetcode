@@ -3,6 +3,112 @@
 > 在前一个元素已知的情况下，灵活分配空间，在O(1)时间内增加、删除
 > 查询元素需要O(N)时间
 
+## 基操勿6
+
+```javascript
+/*
+* 链表结点
+*/
+class ListNode {
+  constructor(val){
+    this.value = null
+    this.next = null
+  }
+}
+/*
+* 实现单链表
+*/
+class LinkedList {
+  constructor(){
+    // 虚拟结点，初始化好以后，不会移动
+    this.dummy = new ListNode()
+    /* 每次对链表进行操作后，记得修改tail指针和length */
+    // 尾结点，始终指向最后一个结点
+    this.tail = dummy
+    // 链表长度
+    this.length = 0
+  }
+  /*
+  * 大多数情况下，返回指定结点前面的一个结点 prev 更加有用。
+  * 1、通过 prev.next 就可以访问到你想要找到的结点，如果没有找到，那么 prev.next 为 null；
+  * 2、通过 prev 可以方便完成新增结点/删除结点操作：在 target 前面 insert 一个新结点，或者将 target 结点从链表中移出去。
+  * 返回 index 结点的前驱结点，
+  */
+  __getPrevNode(index) {
+    // 一前一后
+    let prev = this.dummy
+    let post = this.dummy.next
+    // 初始化时 post 位于 下标0 ，移动 index 次到达 下标index 位置
+    for(let i = 0; post && i < index; i++){
+      prev = post
+      post = post.next
+    }
+    return prev
+  }
+
+  addAtTail(val) {
+    /* 将值为 val 的结点追加到链表尾部*/
+    // 通过虚拟结点初始化单链表后，tail始终有值，不用做非空判断
+    this.tail.next = new ListNode(val)
+    this.tail = this.tail.next
+    this.length++
+  }
+
+  addAtHead(val) {
+    /* 插入值val的新结点，使它成为链表的第一个结点*/
+    const head = new ListNode(val)
+    head.next = this.dummy.next
+    this.dummy.next = head
+    if(this.dummy === this.tail){
+      // 此时为空链表，添加的结点为唯一结点，需要修改tail指针；
+      // 非空链表时，添加头结点不会影响tail的指针，无需修正；
+      this.tail = head
+    }
+    this.length++
+  }
+  
+  get(index) {
+    /* 获取链表中第index个结点的值。如果索引无效，则返回-1。*/
+    // index从0开始。
+    if (index < 0 || index > this.length - 1) return -1
+    // this.__getPrevNode(index).next 必定有值
+    return this.__getPrevNode(index).next.value
+  }
+
+  addAtIndex(index, val) {
+    /* 在链表中的第 index 个结点之前添加值为 value  的结点。*/
+    // 1. 如果 index 等于链表的长度，则该结点将附加到链表的末尾。
+    // 2. 如果 index 大于链表长度，则不会插入结点。
+    // 3. 如果index小于0，则在头
+    // 4. 否则在指定位置前面插入结点。
+    if (index === this.length) {
+      this.addAtTail(val)
+    } else if (index < 0) {
+      this.addAtHead(val)
+    } else if (index >= 0 && index <= this.length - 1) {
+      /* 添加到指定位置 */
+      const prev = this.__getPrevNode(index)
+      const insertNode = new LinkNode(index)
+      insertNode.next = prev.next
+      prev.next = insertNode
+      this.length++
+    }
+  }
+
+  deleteAtIndex(index) {
+    /* 如果索引index有效，则删除链表中的第index个结点。*/
+    if (index < 0 || index > this.length -1) return
+    const prev = this.__getPrevNode(index)
+    /* 如果删除的是最后一个结点，修复tail指针；否则删除的是dummy到tail之间的结点，必定有值，不用非空判断 */
+    if (this.tail === prev.next) {
+      this.tail = prev
+    }
+    prev.next = prev.next.next
+    this.length--
+  }
+}
+```
+
 ## 解题技巧
 
 * 快慢指针
