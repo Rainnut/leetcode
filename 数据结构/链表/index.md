@@ -111,26 +111,47 @@ class LinkedList {
 
 ## 解题技巧
 
-* 快慢指针
-  * 证明闭环形链表：按照相对论的观点，以慢指针pslow为参考系，或者说从慢指针pslow的视角来看，快指针pfast每次只是移动一步，当然也就不会产生跳过慢指针的情况。
-* 三个指针
-  * 链表反转、寻找第k个元素
-* 构建一个虚拟的链表头
-  * 俩个排序的链表，进行整合排序，将链表奇偶数按原定顺序分离，生成前半段为奇数，后半部分为偶数的链表
+### 构建一个虚拟的链表头
 
-### 训练技巧
+* 俩个排序的链表，进行整合排序，将链表奇偶数按原定顺序分离，生成前半段为奇数，后半部分为偶数的链表
 
-* 在纸上画出节点的交互关系，接着画出修改方法
+### 新链表
+
+#### 删除指定值的结点，在尾部根据条件插入结点
+
+![](./assets/新链表方式删除结点.gif)
+
+#### 链表反转，始终在头部插入遍历结点
+
+![](./assets/新链表方式反转链表.gif)
 
 ```javascript
-/**
- * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
- * }
- */
+/* 
+* 时间复杂度：O(N)
+* 空间复杂度：O(1)
+*/
+function reverseList (head) {
+  const dummy = new LinkNode()
+  // 从头遍历 head 链表
+  while (head) {
+    /*  
+    * 1、取得下一结点，用于下次遍历
+    * 2、当前结点指向 dummy.next 结点
+    * 3、插入结点到新链表头部
+    * 4、更新旧链表的头结点
+    */
+    const temp = head.next
+    head.next = dummy.next
+    dummy.next = head
+    head = temp
+  }
+  return dummy.next
+}
 ```
+
+### 快慢指针
+
+* 证明闭环形链表：按照相对论的观点，以慢指针pslow为参考系，或者说从慢指针pslow的视角来看，快指针pfast每次只是移动一步，当然也就不会产生跳过慢指针的情况。
 
 ## 题型
 
