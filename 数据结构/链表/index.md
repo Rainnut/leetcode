@@ -88,7 +88,7 @@ class LinkedList {
     } else if (index >= 0 && index <= this.length - 1) {
       /* 添加到指定位置 */
       const prev = this.__getPrevNode(index)
-      const insertNode = new LinkNode(index)
+      const insertNode = new ListNode(index)
       insertNode.next = prev.next
       prev.next = insertNode
       this.length++
@@ -119,7 +119,33 @@ class LinkedList {
 
 #### 删除指定值的结点，在尾部根据条件插入结点
 
+* 删除指定值的结点
 ![](./assets/新链表方式删除结点.gif)
+
+```javascript
+/*
+* 时间复杂度：O(N)
+* 空间复杂度：O(1)
+*/
+function removeElements (head, val) {
+  const dummy = new ListNode()
+  let tail = dummy
+  let cur= head
+  while (cur) {
+    if (cur.val === val) {
+      cur = cur.next
+      continue
+    }
+    tail.next = cur
+    tail = tail.next
+  }
+  tail.next = null
+  return dummy.next
+}
+```
+
+* 给定一个排序链表，删除重复出现的元素，使得每个元素只出现一次
+* 给定一个排序链表，删除重复出现的元素，只留下没有重复出现的元素。
 
 #### 链表反转，始终在头部插入遍历结点
 
@@ -131,7 +157,7 @@ class LinkedList {
 * 空间复杂度：O(1)
 */
 function reverseList (head) {
-  const dummy = new LinkNode()
+  const dummy = new ListNode()
   // 从头遍历 head 链表
   while (head) {
     /*  
@@ -149,9 +175,119 @@ function reverseList (head) {
 }
 ```
 
+#### 合并有序链表，尾部插入法
+
+```javascript
+/* 
+* 时间复杂度：O(N)
+* 空间复杂度：O(1)
+*/
+var mergeTwoLists = function(l1, l2) {
+  const dummy = new ListNode()
+  let tail = dummy
+  while (l1 || l2) {
+    if (!l2 || (l1 && l1.val < l2.val)) {
+      /*
+      * l2 为空
+      * l1 和 l2 不为空且 l1 值小于 l2 值
+      */
+      tail.next = l1
+      tail = tail.next
+      l1 = l1.next
+    } else {
+      /*
+      * l1 为空
+      * l1 和 l2 不为空且 l2 值小于 l1 值
+      */
+     tail.next = l2
+     tail = tail.next
+     l2 = l2.next
+    }
+  }
+  // 最后修复尾结点
+  tail.next = null
+  return dummy.next
+}
+```
+
+#### k个有序链表合并
+
+```javascript
+/* 
+* 时间复杂度：O(N*k)
+* 空间复杂度：O(1)
+*/
+var mergeKLists = function(lists) {
+  /* 
+  * k 个链表合并问题，简化为多次俩个链表合并
+  */
+  return lists.reduce((mergeNode, curNode) => {
+    const dummy = new ListNode()
+    let tail = dummy
+    while (mergeNode || curNode) {
+      if (!curNode || (mergeNode && mergeNode.val < curNode.val)) {
+        tail.next = mergeNode
+        mergeNode = mergeNode.next
+      } else {
+        tail.next = curNode
+        curNode = curNode.next
+      }
+      tail = tail.next
+    }
+    tail.next = null
+    return dummy.next
+  }, null)
+}
+```
+
+## 双指针
+
 ### 快慢指针
 
-* 证明闭环形链表：按照相对论的观点，以慢指针pslow为参考系，或者说从慢指针pslow的视角来看，快指针pfast每次只是移动一步，当然也就不会产生跳过慢指针的情况。
+#### 证明闭环形链表
+
+> 按照相对论的观点，以慢指针pslow为参考系，或者说从慢指针pslow的视角来看，快指针pfast每次只是移动一步，当然也就不会产生跳过慢指针的情况。
+
+#### 拆分链表
+<https://kaiwu.lagou.com/course/courseInfo.htm?courseId=685#/detail/pc?id=6694>
+
+### 间隔指针
+
+#### 链表的倒数第 N 个结点
+
+> 前面的指针先走 k 步，后面的指针再一起走。
+
+* 在原链表前面加上 dummy，变成带假头的链表
+* front 指针从 dummy 开始，走 k 步，然后停下来
+* back 指针指向链表 dummy 假头
+* 然后两个指针再一起走
+* 当 front 指针指向最后一个结点时，back 指针刚好指向倒数第 k 个结点的前驱。
+
+```javascript
+/* 
+* 时间复杂度：O(N)
+* 空间复杂度：O(1)
+*/
+var removeNthFromEnd = function(head, n) {
+  const dummy = new ListNode(0, head)
+  let pre = dummy, front = dummy
+  let length = 0
+  while (front.next) {
+    front = front.next
+    length ++
+    if (length > n) pre = pre.next
+  }
+  /* 
+  * 1、结点数少于 k ，不处理
+  * 2、结点数等于k，删除头结点
+  * 3、结点数大于k，front 遍历到尾结点，pre指向第 n - 1 ，删除后继结点即可 
+  */
+  if (length >= n) {
+    pre.next = pre.next.next
+  }
+  return dummy.next
+}
+```
 
 ## 题型
 
