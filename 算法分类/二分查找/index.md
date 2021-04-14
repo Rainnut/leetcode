@@ -75,3 +75,25 @@ var rightBound = function (nums, target) {
   // return nums[left - 1] === target ? left - 1 : -1
 }
 ```
+
+# 搜索插入位置
+<https://leetcode-cn.com/problems/search-insert-position/description/>
+
+```javascript
+var searchInsert = function(nums, target) {
+  // 考点：二分查找 + left为最后插入节点下标
+  let left = 0, right = nums.length
+  if (right === 0) return 0
+  while (left < right) {
+    const m = left + ((right - left) >> 1)
+    if (nums[m] === target) {
+      return m
+    } else if (nums[m] < target) {
+      left = m + 1
+    } else {
+      right = m
+    }
+  }
+  return left
+}
+```
