@@ -1,60 +1,26 @@
-function TreeNode(val, left, right) {
-  this.val = (val===undefined ? 0 : val)
-  this.left = (left===undefined ? null : left)
-  this.right = (right===undefined ? null : right)
-}
+var searchRange = function (nums, target) {
+  let l1 = 0,
+    l2 = 0
+  let r1 = nums.length,
+    r2 = r1
+  if (!nums || !target) return [-1, -1]
 
-var inorderTraversal = function (root) {
-  var result = []
-  function inorder(node) {
-    if (!node) return
-
-    inorder(node.left)
-    result.push(node.val)
-    inorder(node.right)
-  }
-  inorder(root)
-  return result
-}
-
-var morrisInorderTraversal = function (root) {
-  let cursor = root
-  const result = []
-  while (cursor) {
-    if (!cursor.left) {
-      /*
-      * 左子节点为空，输出当前节点
-      * 节点移到右子节点
-      */
-      result.push(cursor.val)
-      cursor = cursor.right
+  while (l1 < r1) {
+    const m1 = l1 + ((r1 - l1) >> 1)
+    if (nums[m1] < target) {
+      l1 = m1 + 1
     } else {
-      // 记录 cursor 的前继节点
-      let pre = cursor.left
-      while (pre.right && pre.right !== cursor) {
-        pre = pre.right
-      }
-      if (!pre.right) {
-        /* 
-        * 
-        */
-        pre.right = cursor
-        cursor = cursor.left
-      } else {
-        result.push(cursor.val)
-        pre.right = null
-        cursor = cursor.right
-      }
+      r1 = m1
     }
   }
-  return result
+  while (l2 < r2) {
+    const m2 = l2 + ((r2 - l2) >> 1)
+    if (nums[m2] <= target) {
+      l2 = m2 + 1
+    } else {
+      r2 = m2
+    }
+  }
+  return [nums[l1] === target ? l1 : -1, nums[r2] === target ? r2 - 1 : -1]
 }
-
-const root = new TreeNode(3)
-root.left = new TreeNode(4)
-root.right = new TreeNode(5)
-root.left.left = new TreeNode(6)
-root.left.right = new TreeNode(7)
-console.log(JSON.stringify(root))
-console.log(inorderTraversal(root))
-console.log(morrisInorderTraversal(root))
+searchRange([5, 7, 7, 8, 8, 10], 8)
