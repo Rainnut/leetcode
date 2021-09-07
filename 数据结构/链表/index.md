@@ -3,6 +3,34 @@
 > 在前一个元素已知的情况下，灵活分配空间，在O(1)时间内增加、删除
 > 查询元素需要O(N)时间
 
+## 添加元素
+
+### 尾部添加元素
+
+直接修改尾部元素的next指向新元素即可
+
+### 任意结点间插入新结点
+
+![](./assets/添加新结点.png)
+**在操作时，只要知道node1的信息即可（node1.next能够获取Node2信息）**
+
+```js
+const node3 = new ListNode(3)
+node3.next = node1.next
+node1.next = node3
+```
+
+## 删除元素
+
+![](./assets/删除结点.png)
+**定位目标结点的前驱结点(node1)。**
+**直接让它的前驱结点 node1 的 next 指针跳过它、指向 node3 的后继即可**
+node3 就成为了一个完全不可抵达的结点了，它会被 JS 的垃圾回收器自动回收掉
+
+```js
+node1.next = node3.next 
+```
+
 ## 基操勿6
 
 ```javascript
@@ -249,6 +277,7 @@ var mergeKLists = function(lists) {
 > 按照相对论的观点，以慢指针pslow为参考系，或者说从慢指针pslow的视角来看，快指针pfast每次只是移动一步，当然也就不会产生跳过慢指针的情况。
 
 #### 拆分链表
+
 <https://kaiwu.lagou.com/course/courseInfo.htm?courseId=685#/detail/pc?id=6694>
 
 ### 间隔指针
